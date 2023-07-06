@@ -1,0 +1,44 @@
+<div class="container">
+
+    <form [formGroup]="form">
+        <table class="table table-bordered border-dark">
+            <thead>
+                <tr>
+                    <th colspan="2" class="titulo">Ficha De Cadastro De Produto</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let atributo of atributos;let index = index">
+
+                    <ng-container *ngIf="atributo.tipo === 'sub-titulo'; else inputRow">
+                        <th [attr.colspan]="2" class="titulo">{{ atributo.nome }}</th>
+                    </ng-container>
+
+                    <ng-template #inputRow>
+                        <td class="coluna-nome">{{ atributo.nome }}</td>
+                        <td>
+                            <ng-container *ngIf="!atributo.tipo">
+                                <input type="text" [formControlName]="atributo.nome" [name]="atributo.nome + index" />
+                            </ng-container>
+
+                            <ng-container *ngIf="atributo.tipo === 'classificacao'">
+                                <label class="me-5"><input type="radio" [formControlName]="'Classificação'"
+                                        value="Genérico"> Genérico</label>
+                                <label class="me-5"><input type="radio" [formControlName]="'Classificação'"
+                                        value="Similar" /> Similar</label>
+                                <label class="me-5"><input type="radio" [formControlName]="'Classificação'"
+                                        value="RX(Ético)" /> RX(Ético)</label>
+                            </ng-container>
+                            
+                        </td>
+                    </ng-template>
+
+                </tr>
+            </tbody>
+        </table>
+        <button class="btn btn-warning float-end mb-3" (click)="gerarExcel()">Gerar Excel</button>
+    </form>
+
+
+</div>

@@ -1,0 +1,43 @@
+
+form{
+    margin-top: 10px;
+}
+
+input[type="file"]{
+    display: none;
+}
+label[for='file']{
+    background-color: #d5baba;
+    font-size: 17px;
+    font-family: Arial, Helvetica, sans-serif;
+    height: 3rem;
+    width: 15rem;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid black;
+    cursor: pointer;
+}
+
+label[for='file']:hover{
+    color: white;
+    opacity: 0.9;
+}
+
+.btn-enviar{
+    font-family: Arial, Helvetica, sans-serif;
+    margin-left:  5px;
+    padding: 10px;
+    background-color: #cbcbcb;
+    
+}
+.btn-enviar:hover{
+    color: white;
+    opacity: 1;
+}
+li a {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
