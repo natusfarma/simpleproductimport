@@ -17,7 +17,8 @@ export class RegistrarProdutoComponent implements OnInit {
   atributos: Array<ProdutoXml> = []
   atributosXml!:DadosCabecalhoXml;
   atributosNotasXml!:ItemNotaXml;
-  constructor(private fb: FormBuilder, private service: ProdutosService, private aRoute: ActivatedRoute) {
+  atributo!:ProdutoXml;
+  constructor(private fb: FormBuilder, private service: ProdutosService) {
 
   }
 
@@ -33,8 +34,12 @@ export class RegistrarProdutoComponent implements OnInit {
       this.preencherCampos(this.atributosXml)
       this.preencherCampos(this.atributosNotasXml)
     }
-    
-      
+      if(this.atributosXml.fornecedores.length > 1){
+        this.buscarOpcoes(this.atributos[1])
+      }else{
+        let fornecedor = this.atributosXml.fornecedores[0];
+        this.form.get(this.atributos[1].nome)?.setValue(fornecedor.codigo + " - " +fornecedor.nome )
+      }
   }
 
   criarFormulario() {
@@ -47,7 +52,6 @@ export class RegistrarProdutoComponent implements OnInit {
   }
 
   preencherCampos(obj:any){
-    
     for (const key in obj) {
       for (let i = 0; i < this.atributos.length; i++) {
         const e = this.atributos[i];
@@ -61,10 +65,15 @@ export class RegistrarProdutoComponent implements OnInit {
 
 
   gerarExcel() {
+    
     let conteudo = this.obterDados();
     const fileName = "nota_" + this.atributosXml.nNF + "_" + this.atributosNotasXml.cProd + '.csv';
     const blob = new Blob([conteudo], { type: 'text/csv;charset=utf-8;' });
     const link = document.createElement('a');
+    const formData = new FormData();
+    formData.append('file', blob, fileName);
+    this.service.gerarExcel(formData,fileName);
+   
     link.href = URL.createObjectURL(blob);
     link.download = fileName;
     link.click();
@@ -76,22 +85,25 @@ export class RegistrarProdutoComponent implements OnInit {
       if(a.tipo === 'sub-titulo'){
         result += a.nome +"\n"
       }else{
-        result += a.nome + ";" + this.form.get(a.nome)?.value +"\n";
+        result += a.nome + ";";
+        if(a?.codigo){
+          result += a.codigo + " - ";
+        }
+        result += this.form.get(a.nome)?.value +"\n";
       }
       
     });
-   
-   
-
     return result
   }
 
-  obterString(titulo: string, atributos: ProdutoXml[]): string {
-    let dados = titulo + '\n';
-    atributos.forEach(atr => {
-      dados += atr.nome + ';' + this.form.get(atr.nome)?.value + '\n'
-    });
 
-    return dados
+  buscarOpcoes(atributo:ProdutoXml){
+    atributo.mostrarOpcoes = true;
+    this.atributo = atributo;
+    //let valor = this.form.get(atributo.nome)?.value;
+    //this.service.buscarOpcoes(valor,campoBusca).subscribe(res => {
+    //atributo.listaOpcoes = res;
+    //});
   }
+
 }

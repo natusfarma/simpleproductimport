@@ -1,0 +1,43 @@
+<div class="dialog-overlay">
+    <div class="dialog-content">
+      
+      <div class="titulo position-relative">
+        <h2>{{atributo.nome}}
+          
+        
+        </h2>
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark pointer" (click)="fechar()">X</span>
+      </div>
+      
+      <form autocomplete="off">
+       
+        <div class="pesquisa">
+          <div class="pesquisa-campos">
+            <select name="opcoes" nome="opcoes" [(ngModel)]="tipo">
+              <option value="nome">Nome</option>
+              <option value="codigo">Código</option>
+            </select>
+
+            <input type="text" name="pesquisa" placeholder="Digite aqui" [(ngModel)]="campoBusca"> 
+            <div class="icon">
+              <i class="fas fa-search pointer" *ngIf="!carregando" (click)="buscar()"></i>
+              <i class="fa fa-spinner fa-pulse" *ngIf="carregando"></i>
+            </div>
+          </div>
+         
+          <div class="list">
+            <li class="mensagem-erro" *ngIf="mensagemErro != ''" >{{mensagemErro}}</li>
+            <li class="list-items" *ngFor="let item of list" (click)="selecionar(item)">
+              {{item.codigo}} - {{item.nome}}
+            </li>
+          </div>
+         
+        </div>
+        
+        
+
+      </form>
+      
+      
+    </div>
+  </div>

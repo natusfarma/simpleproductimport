@@ -35,9 +35,15 @@ label[for='file']:hover{
     color: white;
     opacity: 1;
 }
-li a {
-    margin-top: 10px;
-    display: flex;
+
+
+.col-status{
     justify-content: center;
-    align-items: center;
+    cursor: pointer;
+    text-align: center;
 }
+  
+.col-status i {
+    display: inline-block;
+    vertical-align: middle;
+}   

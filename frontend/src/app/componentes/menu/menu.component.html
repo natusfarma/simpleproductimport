@@ -8,12 +8,29 @@
   <span *ngIf="arquivoXML">
     {{arquivoXML.name}}
   </span>
-  <ul class="list-group col-6 mt-3">
-    <a class="list-group-item list-group-item-action " *ngFor="let obj of objetosXml?.itensNotaXml;let index = index"
-      (click)="carregarFormulario(index)" routerLink="registrar">{{obj.xProd}}
-      <span class="badge float-end" [ngClass]="{'bg-danger' : obj.status == 'erro','bg-success': obj.status == 'ok'}">{{obj.status}}</span>
-    </a>
-  </ul>
+
+  <table class="table table-bordered border-secondary mt-3">
+    <thead>
+      <tr>
+        <th>Código</th>
+        <th>Nome</th>
+        <th>Barras</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let obj of objetosXml?.itensNotaXml;let index = index">
+        <td>{{obj.cProd}}</td>
+        <td>{{obj.xProd}}</td>
+        <td>{{obj.cEAN}}</td>
+        <td class="col-status" (click)="carregarFormulario(index)" routerLink="registrar">
+          {{obj.status}}
+          <i class="fa fa-check-circle" style='color:#4ce50b' *ngIf="obj.status != ''"></i>
+          <i class="fa fa-exclamation-circle" style='color:red' *ngIf="obj.status == ''"></i>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
 
 </div>

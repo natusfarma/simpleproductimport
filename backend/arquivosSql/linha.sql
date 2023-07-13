@@ -1,0 +1,7 @@
+Select
+	CD_ARV_MERC_LINHA as codigo,
+	DS_ARV_MERC_LINHA as nome
+From
+	EST_ARV_MERC_LINHA
+Where
+	EST_ARV_MERC_LINHA.CD_EMP =1

@@ -31,7 +31,10 @@ export class MenuComponent implements OnInit {
   }
 
   enviarArquivo() {
-    this.service.lerXml(this.arquivoXML).subscribe((res) => this.objetosXml = res)
+    this.service.lerXml(this.arquivoXML).subscribe((res) => {
+      this.objetosXml = res      
+      
+    })
   }
   carregarFormulario(index: number) {
     this.service.objetoSelecionado = this.objetosXml

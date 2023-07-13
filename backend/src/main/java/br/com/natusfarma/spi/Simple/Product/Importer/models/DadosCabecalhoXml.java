@@ -10,7 +10,15 @@ public class DadosCabecalhoXml {
     private String CNPJ;
     private String xNome;
     private List<ItemNotaXml> itensNotaXml;
+    private List<ModeloPadrao> fornecedores;
 
+    public List<ModeloPadrao> getFornecedores() {
+        return fornecedores;
+    }
+
+    public void setFornecedores(List<ModeloPadrao> fornecedores) {
+        this.fornecedores = fornecedores;
+    }
 
     public List<ItemNotaXml> getItensNotaXml() {
         return itensNotaXml;

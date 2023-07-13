@@ -16,86 +16,90 @@ export class ProdutosService {
   lerXml(arquivo:File):Observable<DadosCabecalhoXml>{
     const formData = new FormData();
     formData.append('file',arquivo);
-    return this.http.post<DadosCabecalhoXml>('/api/upload-xml', formData);
+    return this.http.post<DadosCabecalhoXml>('/upload-xml', formData);
   }
 
-  getXml(){
-    return this.http.get<DadosCabecalhoXml>('/api/getXml');
+  gerarExcel(conteudo:FormData,nome:string){
+    this.http.post(`/upload-excel/?nome=${nome}`,conteudo).subscribe(res => console.log(res)
+    )
+  }
+  buscarOpcoes(valor:string,campoBusca:string){
+    return this.http.get(`/${campoBusca}/${valor}`);
   }
 
   getAtributos(){
     return  [
     {nome:"1-Fornecedor",tipo:"sub-titulo"},  
-    {nome:'Fornecedor',xml:'xNome'},
+    {nome:'Fornecedor',xml:'xNome',campoBusca:'fornecedores'},
     {nome:'Descrição',xml:'xProd'},
-    {nome:'Principio ativo',xml:''},
-    {nome:'Forma farmacêutica',xml:''},
+    {nome:'Principio ativo'},
+    {nome:'Forma farmacêutica'},
     {nome:'Codigo produto no fornecedor',xml:'cProd'},
-    {nome:'Linha fornecedor',xml:''},
-    {nome:'Tarja',xml:''},
+    {nome:'Linha fornecedor',campoBusca:'linhas'},
+    {nome:'Tarja'},
     {nome:'Código de barras(EAN)',xml:'cEAN'},
     {nome:'Nº Registro MS',xml:'cProdANVISA'},
-    {nome:'Referência comercial',xml:''},
-    {nome:'Classificação terapeutica',xml:''},
-    {nome:'Psicotrópico port 344/98',xml:''},
-    {nome:'Classificação tipo receita',xml:''},
-    {nome:'Unidade farmacotécnica',xml:''},
-    {nome:'Código DCB',xml:''},
-    {nome:'Fabricante',xml:''},
-    {nome:'CNPJ Fabricante',xml:''},
-    {nome:'Procedência/Origem',xml:''},
-    {nome:'NCM',xml:'NCM'},
-    {nome:'Classificação fiscal',xml:''},
-    {nome:'Cest',xml:'CEST'},
-    {nome:'Lista PIS/Cofins',xml:''},
-    {nome:'Regime',xml:''},
-    {nome:'Produto com IPI',xml:''},
-    {nome:'Refrigeração',xml:''},
+    {nome:'Referência comercial'},
+    {nome:'Classificação terapeutica'},
+    {nome:'Psicotrópico port 344/98'},
+    {nome:'Classificação tipo receita'},
+    {nome:'Unidade farmacotécnica'},
+    {nome:'Código DCB'},
+    {nome:'Fabricante',campoBusca:'fabricantes'},
+    {nome:'CNPJ Fabricante'},
+    {nome:'Procedência/Origem'},
+    {nome:'NCM',xml:'ncm'},
+    {nome:'Classificação fiscal',xml:'ncm'},
+    {nome:'Cest',xml:'cest'},
+    {nome:'Lista PIS/Cofins'},
+    {nome:'Regime'},
+    {nome:'Produto com IPI'},
+    {nome:'Refrigeração'},
     {nome:'Embalagem de faturamento fornecedor',xml:'uCom'},
     {nome:'Preço custo',xml:'vUnCom'},
-    {nome:'Preço fábrica',xml:''},
-    {nome:'PMC',xml:''},
-    {nome:'EAN da caixa fechada',xml:''},
-    {nome:'Quantidade fardo',xml:''},
-    {nome:'Caixa de embarque',xml:''},
-    {nome:'Altura',xml:''},
-    {nome:'Largura',xml:''},
-    {nome:'Comprimento',xml:''},
-    {nome:'Peso',xml:''},
+    {nome:'Preço fábrica'},
+    {nome:'PMC'},
+    {nome:'EAN da caixa fechada'},
+    {nome:'Quantidade fardo'},
+    {nome:'Caixa de embarque'},
+    {nome:'Altura'},
+    {nome:'Largura'},
+    {nome:'Comprimento'},
+    {nome:'Peso'},
 
     {nome:"2-Compras",tipo:"sub-titulo"},
-    {nome:'Comprador',xml:''},
-    {nome:'Suprimento ou Ressuprimento',xml:''},
-    {nome:'Linha comprador',xml:''},
+    {nome:'Comprador'},
+    {nome:'Suprimento ou Ressuprimento'},
+    {nome:'Linha comprador'},
     {nome:'Código do produto/fornecedor',xml:'cProd'},
 
     {nome:"3-Gestão Categorias",tipo:"sub-titulo"},
-    {nome:'Descrição definida',xml:''},
-    {nome:'Departamente',xml:''},
-    {nome:'Categoria',xml:''},
-    {nome:'SubCategoria',xml:''},
-    {nome:'Segmento',xml:''},
-    {nome:'Equivalência',xml:''},
+    {nome:'Descrição definida'},
+    {nome:'Departamente'},
+    {nome:'Categoria'},
+    {nome:'SubCategoria'},
+    {nome:'Segmento'},
+    {nome:'Equivalência'},
     {nome:'Classificação',tipo:"classificacao"},
 
     {nome:"4-Contabilidade",tipo:"sub-titulo"},
-    {nome:'CST(ICMS)',xml:''},
-    {nome:'CST(PIS)',xml:''},
-    {nome:'CST(COFINS)',xml:''},
-    {nome:'ALIQUOTA(ICMS)',xml:''},
-    {nome:'ALIQUOTA(PIS)',xml:''},
-    {nome:'ALIQUOTA(COFINS)',xml:''},
-    {nome:'Código interno',xml:'' },
+    {nome:'CST(ICMS)'},
+    {nome:'CST(PIS)'},
+    {nome:'CST(COFINS)'},
+    {nome:'ALIQUOTA(ICMS)'},
+    {nome:'ALIQUOTA(PIS)'},
+    {nome:'ALIQUOTA(COFINS)'},
+    {nome:'Código interno' },
 
     {nome:"5-Precificação",tipo:"sub-titulo"},
-    {nome:'Papel',xml:''},
-    {nome:'Familia',xml:''},
-    {nome:'Marca',xml:''},
-    {nome:'Preço venda',xml:''},
-    {nome:'Margem',xml:'' },
+    {nome:'Papel'},
+    {nome:'Familia'},
+    {nome:'Marca'},
+    {nome:'Preço venda'},
+    {nome:'Margem' },
 
     {nome:"6-Gestão Comercial",tipo:"sub-titulo"},
-    {nome:'Média P',xml:''}
+    {nome:'Média P'}
 
   ]
   }

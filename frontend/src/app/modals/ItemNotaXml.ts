@@ -1,12 +1,13 @@
 export class ItemNotaXml{
     nItem!:number;
     cProd!:number;
-    NCM!:number;
-    cEAN!:String;
-    xProd!:String;
-    CEST!:String;
-    uCom!:String;
-    vUnCom!:number;
-    cProdANVISA!:String;
-    status!:String;
+    ncm!:number;
+    cEAN!:string;
+    xProd!:string;
+    CEST!:string;
+    uCom!:string;
+    vUnCom!:string;
+    cProdANVISA!:string;
+    
+    status!:string;
 }

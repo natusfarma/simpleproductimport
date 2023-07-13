@@ -1,15 +1,18 @@
-<div class="container">
 
-    <form [formGroup]="form">
+<div class="container">
+    
+    <form [formGroup]="form" autocomplete="off">
+        
+        
         <table class="table table-bordered border-dark">
             <thead>
                 <tr>
                     <th colspan="2" class="titulo">Ficha De Cadastro De Produto</th>
                 </tr>
             </thead>
-
+            
             <tbody>
-                <tr *ngFor="let atributo of atributos;let index = index">
+                <tr class="position-relative" *ngFor="let atributo of atributos;let index = index">
 
                     <ng-container *ngIf="atributo.tipo === 'sub-titulo'; else inputRow">
                         <th [attr.colspan]="2" class="titulo">{{ atributo.nome }}</th>
@@ -17,9 +20,11 @@
 
                     <ng-template #inputRow>
                         <td class="coluna-nome">{{ atributo.nome }}</td>
-                        <td>
+                        <td class="d-flex">
                             <ng-container *ngIf="!atributo.tipo">
-                                <input type="text" [formControlName]="atributo.nome" [name]="atributo.nome + index" />
+                                <input type="text" [formControlName]="atributo.nome" [name]="atributo.nome + index">
+                                <button class="btn btn-sm ms-2 btn-info" *ngIf="atributo.campoBusca" 
+                                (click)="buscarOpcoes(atributo)">Buscar</button>
                             </ng-container>
 
                             <ng-container *ngIf="atributo.tipo === 'classificacao'">
@@ -32,8 +37,9 @@
                             </ng-container>
                             
                         </td>
+                        
                     </ng-template>
-
+                    
                 </tr>
             </tbody>
         </table>
@@ -42,3 +48,5 @@
 
 
 </div>
+
+<app-opcoes *ngIf="atributo?.mostrarOpcoes" [form]="form" [atributo]="atributo" [list]="atributosXml.fornecedores"></app-opcoes>

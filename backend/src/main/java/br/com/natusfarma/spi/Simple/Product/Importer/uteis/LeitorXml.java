@@ -2,35 +2,49 @@ package br.com.natusfarma.spi.Simple.Product.Importer.uteis;
 
 import br.com.natusfarma.spi.Simple.Product.Importer.models.DadosCabecalhoXml;
 import br.com.natusfarma.spi.Simple.Product.Importer.models.ItemNotaXml;
+
+import br.com.natusfarma.spi.Simple.Product.Importer.repositorio.RepositorioCProduto;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class LeitorXml {
 
-    private DadosCabecalhoXml getXml;
-    public DadosCabecalhoXml getXml(){
-        return getXml;
-    }
-    public DadosCabecalhoXml lerXml(Document document){
-        DadosCabecalhoXml dados = new DadosCabecalhoXml();
+    @Autowired
+    private RepositorioCProduto repositorioCProduto;
 
+    public DadosCabecalhoXml lerXml(InputStream is) throws IOException, SAXException, ParserConfigurationException {
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = factory.newDocumentBuilder();
+        Document document = builder.parse(is);
+        return obterCabecalho(document);
+    }
+
+    private DadosCabecalhoXml obterCabecalho(Document document) {
+        DadosCabecalhoXml dados = new DadosCabecalhoXml();
         Element infNFe = (Element) document.getElementsByTagName("infNFe").item(0);
         Element emit = (Element) infNFe.getElementsByTagName("emit").item(0);
         NodeList det = infNFe.getElementsByTagName("det");
-        dados.setItensNotaXml(obterNotas(det));
 
         dados.setCNPJ(obterValorString(emit,"CNPJ"));
-        dados.setxNome(obterValorString(emit,"xNome"));
         dados.setnNF(obterValorInt(infNFe,"nNF"));
-        //dados.setDhEmi(obterValorDate(infNFe,"DhEmi"));
         dados.setSerie(obterValorInt(infNFe,"serie"));
-        this.getXml = dados;
+        dados.setItensNotaXml(obterNotas(det));
         return dados;
     }
+
 
     private List<ItemNotaXml> obterNotas(NodeList det){
         List<ItemNotaXml> notas = new ArrayList();
@@ -41,13 +55,15 @@ public class LeitorXml {
             nota.setnItem(obterAtributoInt(itemNota,"nItem"));
             nota.setcProd(obterValorInt(itemNota,"cProd"));
             nota.setxProd(obterValorString(itemNota,"xProd"));
-            nota.setcEAN(obterValorString(itemNota,"cEAN"));
+            nota.setcEAN(obterValorString(itemNota,"cEANTrib"));
             nota.setCEST(obterValorString(itemNota,"CEST"));
             nota.setcProdANVISA(obterValorString(itemNota,"cProdANVISA"));
             nota.setNCM(obterValorInt(itemNota,"NCM"));
             nota.setuCom(obterValorString(itemNota,"uCom"));
             nota.setvUnCom(obterValorDouble(itemNota,"vUnCom"));
-            nota.setStatus(obterStatus(nota));
+
+            //(<vICMSST> / <qTrib>) + <vUnCom> + (<vIPI>/<qTrib>)
+
 
             notas.add(nota);
         }
@@ -87,7 +103,5 @@ public class LeitorXml {
         }
     }
 
-    private String obterStatus(ItemNotaXml nota){
-    return "";
-    }
+
 }
