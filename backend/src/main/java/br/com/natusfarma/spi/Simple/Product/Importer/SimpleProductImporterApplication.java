@@ -2,6 +2,7 @@ package br.com.natusfarma.spi.Simple.Product.Importer;
 
 import br.com.natusfarma.spi.Simple.Product.Importer.controller.XMLController;
 import br.com.natusfarma.spi.Simple.Product.Importer.models.DadosCabecalhoXml;
+import br.com.natusfarma.spi.Simple.Product.Importer.models.ItemNotaXml;
 import br.com.natusfarma.spi.Simple.Product.Importer.models.ModeloPadrao;
 import br.com.natusfarma.spi.Simple.Product.Importer.services.ConsultaXmlService;
 import br.com.natusfarma.spi.Simple.Product.Importer.services.FornecedorService;
@@ -22,6 +23,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.util.List;
 
 @SpringBootApplication
@@ -32,7 +34,7 @@ public class SimpleProductImporterApplication implements CommandLineRunner {
 	@Autowired
 	private RowMapper rowMapper;
 	@Autowired
-	private FornecedorService service;
+	private ConsultaXmlService service;
 	public static void main(String[] args) {
 		SpringApplication.run(SimpleProductImporterApplication.class, args);
 	}
@@ -43,8 +45,35 @@ public class SimpleProductImporterApplication implements CommandLineRunner {
 		//InputStream is =  new FileInputStream(fileXml);
 
 		//DadosCabecalhoXml dados = service.lerXml(is);
-		//System.out.println(dados);
-		//List<ModeloPadrao> lista = service.consultaNome("");
+		//List<ItemNotaXml> teste = dados.getItensNotaXml();
 
+		/*ItemNotaXml nota = new ItemNotaXml();
+		nota.setvICMSST(new BigDecimal("30.81"));
+		nota.setqTrib(new BigDecimal("12.00"));
+		nota.setvIPI(new BigDecimal("0"));
+		nota.setvUnCom(new BigDecimal("8.66"));
+		System.out.println(nota.getvICMSST());
+		System.out.println(nota.getqTrib());
+		System.out.println(nota.getvIPI());
+		System.out.println(nota.getvUnCom());
+		String s = String.format("(%.3f / %.3f) + %.3f +(%.3f / %.3f)",nota.getvICMSST(),nota.getqTrib(),nota.getvUnCom(),nota.getvIPI(),nota.getqTrib());
+		System.out.println(s);
+		System.out.println(calculoCusto(nota));*/
+	}
+
+
+	private BigDecimal calculoCusto(ItemNotaXml nota){
+		BigDecimal total = nota.getvUnCom();
+		if(!nota.getqTrib().equals(BigDecimal.ZERO)){
+			System.out.println("qTrib =" + nota.getqTrib());
+			return total;
+		}
+		if(!nota.getvICMSST().equals(BigDecimal.ZERO)){
+			total.add(nota.getvICMSST().divide(nota.getqTrib()));
+		}
+		if (!nota.getvIPI().equals(BigDecimal.ZERO)){
+			total.add(nota.getvIPI().divide(nota.getqTrib()));
+		}
+		return total;
 	}
 }

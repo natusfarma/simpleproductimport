@@ -1,13 +1,30 @@
 <div class="container">
 
-  <form (submit)="enviarArquivo()">
-    <input type="file" id="file" (change)="selecionarArquivo($event)" accept=".xml">
-    <label for="file">Escolha um arquivo xml</label>
-    <button type="submit" class="btn btn-enviar">Enviar</button>
-  </form>
-  <span *ngIf="arquivoXML">
-    {{arquivoXML.name}}
-  </span>
+  <div class="alert alert-danger" role="alert" *ngIf="mensagem != ''">
+  {{mensagem}}
+  </div>
+  
+  <div class="row" style="margin-top: 10px;">
+    <form class="col-6" (submit)="enviarArquivo()">
+      <input type="file" id="file" (change)="selecionarArquivo($event)" accept=".xml">
+      <label for="file">Escolha um arquivo xml</label>
+      <button type="submit" class="btn btn-enviar">Enviar</button>
+      <div class="nome-arquivo" *ngIf="arquivoXML">
+        {{arquivoXML.name}}
+      </div>
+    </form>  
+    <div class="col-6">
+    <input type="number" placeholder="Código do usuario" (input)="mensagem = ''" [(ngModel)]="codigo">
+    <button (click)="buscarUsuario()">Buscar</button>
+      <div *ngIf="usuario">
+        {{usuario.codigo}} - {{usuario.nome}}
+      </div>
+    </div>  
+
+  </div>
+ 
+  
+
 
   <table class="table table-bordered border-secondary mt-3">
     <thead>
@@ -23,10 +40,11 @@
         <td>{{obj.cProd}}</td>
         <td>{{obj.xProd}}</td>
         <td>{{obj.cEAN}}</td>
-        <td class="col-status" (click)="carregarFormulario(index)" routerLink="registrar">
-          {{obj.status}}
-          <i class="fa fa-check-circle" style='color:#4ce50b' *ngIf="obj.status != ''"></i>
-          <i class="fa fa-exclamation-circle" style='color:red' *ngIf="obj.status == ''"></i>
+        <td class="col-status" (click)="carregarFormulario(index)">
+          <i class="fa fa-check-circle" style='color:#4ce50b' *ngIf="obj.status == 'ok'"> </i>
+          <i class="fa fa-exclamation-circle" style='color:red' *ngIf="obj.status == 'erro'"></i>
+          <i class="fa fa-exclamation-circle" style='color:rgb(233, 195, 7)' *ngIf="obj.status == 'atencao'"></i>
+          {{obj.codigoProduto}}
         </td>
       </tr>
     </tbody>

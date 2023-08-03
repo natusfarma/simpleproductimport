@@ -12,11 +12,16 @@ form{
 }
 
 input[type='text']{
-    
+
     height: 100%;
     flex-grow: 1;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
 
-
+.export{
+    color:blue;
+}
+.botao{
+    margin-bottom: 30px;
+}

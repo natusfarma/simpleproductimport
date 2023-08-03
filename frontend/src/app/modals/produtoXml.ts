@@ -5,4 +5,7 @@ export interface ProdutoXml{
     campoBusca?:string;
     mostrarOpcoes?:boolean;
     codigo?:number;
+    nomeCadastro?:string;
+    opcoes?:string[]
+    maxlength?:number;
 }

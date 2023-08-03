@@ -25,7 +25,7 @@ public class RepositorioCProduto {
 
     public List<String> consultaCodigo(String cEAN){
         String query = stringQuery +
-                String.format(" AND CD_BARRA = '%s'",cEAN);
+                String.format(" AND CD_BARRA = '%s'", ""+ cEAN+"");
         return consulta.consulta(query,jdbc,(rs,row)-> rowMapper.modeloString(rs));
     }
 }

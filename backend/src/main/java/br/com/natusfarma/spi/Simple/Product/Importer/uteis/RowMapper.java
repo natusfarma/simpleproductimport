@@ -28,9 +28,10 @@ public class RowMapper {
         try{
             subCategoria.setCategoria(rs.getString("CATEGORIA"));
             subCategoria.setSubCategoria(rs.getString("SUBCATEGORIA"));
-            subCategoria.setCodigo(rs.getInt("CODIGO"));
             subCategoria.setDepartamento(rs.getString("DEPARTAMENTO"));
-
+            subCategoria.setCodigo(rs.getInt("CODIGO"));
+            subCategoria.setCodCategoria(rs.getInt("COD_CATEGORIA"));
+            subCategoria.setCodDepartamento(rs.getInt("COD_DEPARTAMENTO"));
         }catch (SQLException e){
             e.getMessage();
         }
@@ -45,4 +46,14 @@ public class RowMapper {
         }
         return "";
     }
+
+    public int modeloInt(ResultSet rs){
+        try{
+            return rs.getInt(1);
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return 0;
+    }
+
 }

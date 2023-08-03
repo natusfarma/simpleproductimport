@@ -6,8 +6,12 @@ export class ItemNotaXml{
     xProd!:string;
     CEST!:string;
     uCom!:string;
-    vUnCom!:string;
+    vUnCom!:number;
     cProdANVISA!:string;
-    
+    vICMSST!:number;
+    qTrib!:number;
+    vIPI!:number;
+    precoCusto!:number;
     status!:string;
+    codigoProduto!:number;
 }

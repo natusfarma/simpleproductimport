@@ -21,9 +21,6 @@ public class RepositorioFabricante {
     private Consulta consulta;
     private File file = new File("arquivosSql/fabricante.sql");
     private String stringQuery = FileStringUtil.FileToString(file);
-
-    private FileStringUtil fileString = new FileStringUtil() {};
-
     public List<ModeloPadrao> consultaNome(String nome){
         String query = stringQuery +
                 String.format(" NM_FABRIC like '%s'", "%" + nome + "%");

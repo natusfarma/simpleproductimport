@@ -18,26 +18,25 @@
               <option value="codigo">Código</option>
             </select>
 
-            <input type="text" name="pesquisa" placeholder="Digite aqui" [(ngModel)]="campoBusca"> 
+            <input [type]="tipo === 'codigo' ? 'number' : 'text'" name="pesquisa" placeholder="Digite aqui" [(ngModel)]="campoBusca"> 
             <div class="icon">
-              <i class="fas fa-search pointer" *ngIf="!carregando" (click)="buscar()"></i>
+              <i class="fas fa-search pointer" *ngIf="!carregando && atributo.nome != 'SubCategoria'" (click)="buscar()"></i>
+              <i class="fas fa-search pointer" *ngIf="!carregando && atributo.nome == 'SubCategoria'" (click)="consultaSubCategoria()"></i>
               <i class="fa fa-spinner fa-pulse" *ngIf="carregando"></i>
             </div>
           </div>
          
           <div class="list">
             <li class="mensagem-erro" *ngIf="mensagemErro != ''" >{{mensagemErro}}</li>
-            <li class="list-items" *ngFor="let item of list" (click)="selecionar(item)">
+            <li class="list-items" *ngFor="let item of listaPadrao" (click)="selecionar(item)" >
               {{item.codigo}} - {{item.nome}}
+            </li>
+            <li class="list-items" *ngFor="let item of listaSubCategorias" (click)="selecionarSubCategoria(item)">
+              {{item.codigo}} - {{item.categoria}} - {{item.subCategoria}} - {{item.departamento}}
             </li>
           </div>
          
         </div>
-        
-        
-
       </form>
-      
-      
     </div>
   </div>

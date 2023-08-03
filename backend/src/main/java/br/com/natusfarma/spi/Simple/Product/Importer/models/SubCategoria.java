@@ -1,10 +1,28 @@
 package br.com.natusfarma.spi.Simple.Product.Importer.models;
 
 public class SubCategoria {
-    private int codigo;
     private String subCategoria;
     private String categoria;
     private String departamento;
+    private int codigo;
+    private int codCategoria;
+    private int codDepartamento;
+
+    public int getCodCategoria() {
+        return codCategoria;
+    }
+
+    public void setCodCategoria(int codCategoria) {
+        this.codCategoria = codCategoria;
+    }
+
+    public int getCodDepartamento() {
+        return codDepartamento;
+    }
+
+    public void setCodDepartamento(int codDepartamento) {
+        this.codDepartamento = codDepartamento;
+    }
 
     public int getCodigo() {
         return codigo;

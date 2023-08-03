@@ -7,10 +7,11 @@ import br.com.natusfarma.spi.Simple.Product.Importer.uteis.RowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.io.File;
 import java.util.List;
-@Component
+@Repository
 public class RepositorioLinha {
     @Autowired
     private JdbcTemplate jdbc;
@@ -20,8 +21,6 @@ public class RepositorioLinha {
     private Consulta consulta;
     private File file = new File("arquivosSql/linha.sql");
     private String stringQuery = FileStringUtil.FileToString(file);
-
-    private FileStringUtil fileString = new FileStringUtil() {};
 
     public List<ModeloPadrao> consultaNome(String nome){
         String query = stringQuery +

@@ -1,52 +1,46 @@
-
 <div class="container">
-    
     <form [formGroup]="form" autocomplete="off">
-        
-        
         <table class="table table-bordered border-dark">
             <thead>
                 <tr>
                     <th colspan="2" class="titulo">Ficha De Cadastro De Produto</th>
                 </tr>
             </thead>
-            
             <tbody>
                 <tr class="position-relative" *ngFor="let atributo of atributos;let index = index">
-
                     <ng-container *ngIf="atributo.tipo === 'sub-titulo'; else inputRow">
                         <th [attr.colspan]="2" class="titulo">{{ atributo.nome }}</th>
                     </ng-container>
 
                     <ng-template #inputRow>
-                        <td class="coluna-nome">{{ atributo.nome }}</td>
+                        <td class="coluna-nome" [ngClass]="{'export': atributo.nomeCadastro}">{{ atributo.nome }} {{atributo.codigo}}</td>
                         <td class="d-flex">
                             <ng-container *ngIf="!atributo.tipo">
-                                <input type="text" [formControlName]="atributo.nome" [name]="atributo.nome + index">
-                                <button class="btn btn-sm ms-2 btn-info" *ngIf="atributo.campoBusca" 
-                                (click)="buscarOpcoes(atributo)">Buscar</button>
+                                <input type="text" [formControlName]="atributo.nome" [name]="atributo.nome + index"
+                                    [maxlength]="atributo.maxlength ? atributo.maxlength : -1">
+                                <button class="btn btn-sm ms-2 btn-info" *ngIf="atributo.campoBusca" type="button"
+                                    (click)="buscarOpcoes(atributo)">Buscar</button>
                             </ng-container>
 
-                            <ng-container *ngIf="atributo.tipo === 'classificacao'">
-                                <label class="me-5"><input type="radio" [formControlName]="'Classificação'"
-                                        value="Genérico"> Genérico</label>
-                                <label class="me-5"><input type="radio" [formControlName]="'Classificação'"
-                                        value="Similar" /> Similar</label>
-                                <label class="me-5"><input type="radio" [formControlName]="'Classificação'"
-                                        value="RX(Ético)" /> RX(Ético)</label>
+                            <ng-container *ngIf="atributo.tipo === 'radio'">
+                                <label *ngFor="let opcao of atributo.opcoes let i = index" class="me-5">
+                                    <input type="radio" [formControlName]="atributo.nome" [value]="i"> {{opcao}}
+                                </label>
                             </ng-container>
-                            
                         </td>
-                        
                     </ng-template>
-                    
                 </tr>
             </tbody>
-        </table>
-        <button class="btn btn-warning float-end mb-3" (click)="gerarExcel()">Gerar Excel</button>
+        </table> 
+        <button class="btn btn-warning float-end mb-3 ms-3" type="button" (click)="gerarExcel()">Gerar Excel</button>
+        <button class="btn btn-info float-end mb-3" type="button" (click)="exportar()">Exportar</button>
     </form>
-
-
 </div>
 
-<app-opcoes *ngIf="atributo?.mostrarOpcoes" [form]="form" [atributo]="atributo" [list]="atributosXml.fornecedores"></app-opcoes>
+<app-opcoes *ngIf="atributo?.mostrarOpcoes && dadosXml?.fornecedores" [form]="form" [atributo]="atributo"
+    [listaFornecedor]="dadosXml.fornecedores" (editarCodigo)="editarCodigo($event)">
+</app-opcoes>
+
+<app-opcoes *ngIf="atributo?.mostrarOpcoes && !dadosXml?.fornecedores" [form]="form" [atributo]="atributo"
+(editarCodigo)="editarCodigo($event)">
+</app-opcoes>

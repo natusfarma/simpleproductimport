@@ -16,6 +16,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @RestController
+@RequestMapping("api/")
 public class XMLController {
 
     @Autowired
@@ -45,13 +46,13 @@ public class XMLController {
 
             String caminhoArquivo = path.toString();
             int index = caminhoArquivo.indexOf(".");
-            int indexUndeline = caminhoArquivo.indexOf("-");
+            int indexUnderline = caminhoArquivo.indexOf("-");
             String extensao = caminhoArquivo.substring(index);
             String caminho;
-            if (indexUndeline == -1){
+            if (indexUnderline == -1){
                 caminho = caminhoArquivo.substring(0,index);
             }else{
-                caminho = caminhoArquivo.substring(0,indexUndeline);
+                caminho = caminhoArquivo.substring(0,indexUnderline);
             }
             String caminhoFinal = caminho + "-"+ num + extensao;
             Path novoPath = Paths.get(caminhoFinal);

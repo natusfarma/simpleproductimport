@@ -16,6 +16,8 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,15 +55,19 @@ public class LeitorXml {
             ItemNotaXml nota = new ItemNotaXml();
 
             nota.setnItem(obterAtributoInt(itemNota,"nItem"));
-            nota.setcProd(obterValorInt(itemNota,"cProd"));
+            nota.setcProd(obterValorLong(itemNota,"cProd"));
             nota.setxProd(obterValorString(itemNota,"xProd"));
             nota.setcEAN(obterValorString(itemNota,"cEANTrib"));
             nota.setCEST(obterValorString(itemNota,"CEST"));
             nota.setcProdANVISA(obterValorString(itemNota,"cProdANVISA"));
             nota.setNCM(obterValorInt(itemNota,"NCM"));
             nota.setuCom(obterValorString(itemNota,"uCom"));
-            nota.setvUnCom(obterValorDouble(itemNota,"vUnCom"));
+            nota.setvUnCom(obterValorBigDecimal(itemNota,"vUnCom"));
 
+            nota.setvICMSST(obterValorBigDecimal(itemNota,"vICMSST"));
+            nota.setqTrib(obterValorBigDecimal(itemNota,"qTrib"));
+            nota.setvIPI(obterValorBigDecimal(itemNota,"vIPI"));
+            nota.setPrecoCusto(calculoCusto(nota));
             //(<vICMSST> / <qTrib>) + <vUnCom> + (<vIPI>/<qTrib>)
 
 
@@ -69,8 +75,18 @@ public class LeitorXml {
         }
         return notas;
     }
-
-
+    private BigDecimal calculoCusto(ItemNotaXml nota){
+        BigDecimal total = nota.getvUnCom().setScale(2,RoundingMode.HALF_UP);
+        if(!nota.getqTrib().equals(BigDecimal.ZERO)) {
+            if (!nota.getvICMSST().equals(BigDecimal.ZERO)) {
+                total = total.add(nota.getvICMSST().divide(nota.getqTrib(), 2, RoundingMode.HALF_UP));
+            }
+            if (!nota.getvIPI().equals(BigDecimal.ZERO)) {
+                total = total.add(nota.getvIPI().divide(nota.getqTrib(), 2, RoundingMode.HALF_UP));
+            }
+        }
+        return total;
+    }
 
     private String obterValorString(Element element,String tag){
         try{
@@ -80,11 +96,11 @@ public class LeitorXml {
         }
     }
 
-    private double obterValorDouble (Element element ,String tag){
+    private BigDecimal obterValorBigDecimal (Element element ,String tag){
         try{
-            return Double.parseDouble(element.getElementsByTagName(tag).item(0).getTextContent());
+            return new BigDecimal(element.getElementsByTagName(tag).item(0).getTextContent());
         }catch(Exception e){
-            return -1;
+            return new BigDecimal("0");
         }
     }
 
@@ -92,14 +108,21 @@ public class LeitorXml {
         try{
             return Integer.parseInt(element.getElementsByTagName(tag).item(0).getTextContent());
         }catch(Exception e){
-            return -1;
+            return 0;
+        }
+    }
+    private Long obterValorLong(Element element ,String tag){
+        try{
+            return Long.parseLong(element.getElementsByTagName(tag).item(0).getTextContent());
+        }catch(Exception e){
+            return 0L;
         }
     }
     private int obterAtributoInt(Element element ,String tag){
         try{
             return Integer.parseInt(element.getAttribute(tag));
         }catch(Exception e){
-            return -1;
+            return 0;
         }
     }
 
