@@ -1,3 +1,3 @@
-*.png filter=lfs diff=lfs merge=lfs -text
-package-lock.json filter=lfs diff=lfs merge=lfs -text
-maven-wrapper.jar filter=lfs diff=lfs merge=lfs -text
+version https://git-lfs.github.com/spec/v1
+oid sha256:2c09adb7720cc1f8630673b82c76a77aae68234ec7552497f803eb0cc626fe4a
+size 194
