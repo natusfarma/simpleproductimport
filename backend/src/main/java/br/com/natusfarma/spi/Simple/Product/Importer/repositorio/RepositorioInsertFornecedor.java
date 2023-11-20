@@ -24,7 +24,7 @@ public class RepositorioInsertFornecedor {
     public String inserirCodFornecedorNaFilial(DadosProduto dadosProduto){
         String query = stringQuery
                 .replace("codigoProduto",String.valueOf(dadosProduto.getCodigoProduto()))
-                .replace("codigoProdutoFornecedor",String.valueOf(dadosProduto.getCd_produtoFornecedor()))
+                .replace("codigoProdFornecedor",String.valueOf(dadosProduto.getCd_produtoFornecedor()))
                 .replace("codigoUsuario",String.valueOf(dadosProduto.getCd_USU()))
                 .replace("codigoFornecedor",String.valueOf(dadosProduto.getCd_fornecedor()));
 

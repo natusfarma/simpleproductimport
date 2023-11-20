@@ -11,12 +11,13 @@ form{
     width: 30%;
 }
 
-input[type='text']{
-
-    height: 100%;
-    flex-grow: 1;
+.input-padrao{
+    width: 100%;
     border: 1px solid #ccc;
     border-radius: 4px;
+}
+.input-reduzido{
+    width: calc(100% - 70px);
 }
 
 .export{
@@ -24,4 +25,19 @@ input[type='text']{
 }
 .botao{
     margin-bottom: 30px;
+}
+.coluna-input {
+    position: relative; 
+  }
+
+  td.coluna-input button {
+    position: absolute;
+    right: 3px;
+    top: 4px;
+  }
+
+input.ng-invalid.ng-touched{
+    border-color: red;
+    background-color: #ffecec;
+    color: #9f3a38;
 }

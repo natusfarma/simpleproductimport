@@ -14,7 +14,7 @@ VALUES (
 1,
 codigoProduto,
 codigoFornecedor,
-'codigoProdutoFornecedor',
+'codigoProdFornecedor',
 0,
 0,
 1,

@@ -2,11 +2,9 @@ package br.com.natusfarma.spi.Simple.Product.Importer.services;
 
 import br.com.natusfarma.spi.Simple.Product.Importer.models.DadosProduto;
 import br.com.natusfarma.spi.Simple.Product.Importer.repositorio.*;
-import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -16,9 +14,9 @@ public class RegistrarService {
     @Autowired
     private RepositorioUsuario repositorioUsuario;
     @Autowired
-    private RepositorioBarras insertBarras;
+    private RepositorioInsertBarras insertBarras;
     @Autowired
-    private RepositorioProduto insertProduto;
+    private RepositorioInsertProduto insertProduto;
     @Autowired
     private RepositorioInsertFornecedor insertFornecedor;
     @Autowired
@@ -37,9 +35,7 @@ public class RegistrarService {
         System.out.println(insertComprador.inserirComprador(dadosProduto));
         System.out.println(insertLinhaSub.inserirArvoreMercadologica(dadosProduto));
         System.out.println(insertFilial.inserirNaFilial(dadosProduto,1));
-
-
-        return "Produto Inserido com sucesso.";
+        return String.valueOf(dadosProduto.getCodigoProduto());
     }
 
 

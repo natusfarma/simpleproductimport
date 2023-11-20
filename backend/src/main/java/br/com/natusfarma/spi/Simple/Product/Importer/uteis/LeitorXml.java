@@ -20,6 +20,9 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 @Component
 public class LeitorXml {
@@ -55,7 +58,7 @@ public class LeitorXml {
             ItemNotaXml nota = new ItemNotaXml();
 
             nota.setnItem(obterAtributoInt(itemNota,"nItem"));
-            nota.setcProd(obterValorLong(itemNota,"cProd"));
+            nota.setcProd(obterValorString(itemNota,"cProd"));
             nota.setxProd(obterValorString(itemNota,"xProd"));
             nota.setcEAN(obterValorString(itemNota,"cEANTrib"));
             nota.setCEST(obterValorString(itemNota,"CEST"));
@@ -73,7 +76,9 @@ public class LeitorXml {
 
             notas.add(nota);
         }
-        return notas;
+        Set<ItemNotaXml> list = new TreeSet<>();
+        list.addAll(notas);
+        return list.stream().collect(Collectors.toList());
     }
     private BigDecimal calculoCusto(ItemNotaXml nota){
         BigDecimal total = nota.getvUnCom().setScale(2,RoundingMode.HALF_UP);

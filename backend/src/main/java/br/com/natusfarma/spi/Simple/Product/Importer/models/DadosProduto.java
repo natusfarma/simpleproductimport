@@ -18,13 +18,34 @@ public class DadosProduto {
     private int cd_subCategoria;
     private int cd_categoria;
     private int cd_fornecedor;
-    private int cd_produtoFornecedor;
+    private String cd_produtoFornecedor;
 
-    public int getCd_produtoFornecedor() {
+    @Override
+    public String toString() {
+        return "DadosProduto{" +
+                "codigoProduto=" + codigoProduto +
+                ", ds_PROD='" + ds_PROD + '\'' +
+                ", ds_USUAL='" + ds_USUAL + '\'' +
+                ", cd_USU=" + cd_USU +
+                ", cd_FABRIC=" + cd_FABRIC +
+                ", nr_NCM=" + nr_NCM +
+                ", nr_CEST=" + nr_CEST +
+                ", barras='" + barras + '\'' +
+                ", suprimento=" + suprimento +
+                ", cd_comprador=" + cd_comprador +
+                ", cd_linha=" + cd_linha +
+                ", cd_subCategoria=" + cd_subCategoria +
+                ", cd_categoria=" + cd_categoria +
+                ", cd_fornecedor=" + cd_fornecedor +
+                ", cd_produtoFornecedor=" + cd_produtoFornecedor +
+                '}';
+    }
+
+    public String getCd_produtoFornecedor() {
         return cd_produtoFornecedor;
     }
 
-    public void setCd_produtoFornecedor(int cd_produtoFornecedor) {
+    public void setCd_produtoFornecedor(String cd_produtoFornecedor) {
         this.cd_produtoFornecedor = cd_produtoFornecedor;
     }
 

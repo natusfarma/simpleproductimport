@@ -37,19 +37,21 @@ public class ConsultaXmlService {
 
         List<ModeloPadrao> fornecedor = this.fornecedor.consultaCnpj(dados.getCNPJ());
         dados.setFornecedores(fornecedor);
-        dados.setItensNotaXml(obterLista(dados));
+        if(dados.getFornecedores().size() > 0){
+            dados.setItensNotaXml(obterLista(dados,0));
+        }
         return dados;
     }
 
-    private List<ItemNotaXml> obterLista(DadosCabecalhoXml dados){
+    public List<ItemNotaXml> obterLista(DadosCabecalhoXml dados,int index){
         List<ItemNotaXml> itensNotaXml = dados.getItensNotaXml();
         for (int i = 0; i < itensNotaXml.size(); i++) {
             ItemNotaXml item = itensNotaXml.get(i);
             String status = "ok";
             String codigoProduto = verificarBarras(item.getcEAN());
             if(codigoProduto == ""){
-                codigoProduto = verificarVinculo(item.getcProd(),dados.getFornecedores().get(0).getCodigo());
                 status = "atencao";
+                codigoProduto = verificarVinculo(item.getcProd(),dados.getFornecedores().get(index).getCodigo());
                 if (codigoProduto == ""){
                     status = "erro";
                 }
@@ -69,7 +71,7 @@ public class ConsultaXmlService {
         }
     }
 
-    public String verificarVinculo(Long codigoProduto,int codigoFornecedor){
+    public String verificarVinculo(String codigoProduto,int codigoFornecedor){
         try{
             List<String> codigos = repositorioVinculoProdutoFornecedor.consultaCodigo(codigoProduto,codigoFornecedor);
            return codigos.get(0);

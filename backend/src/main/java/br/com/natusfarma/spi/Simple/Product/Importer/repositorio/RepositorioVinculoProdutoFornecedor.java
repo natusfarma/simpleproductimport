@@ -21,7 +21,7 @@ public class RepositorioVinculoProdutoFornecedor {
     private Consulta consulta;
     private File file = new File("arquivosSql/vinculoProdutoComFornecedor.sql");
     private String stringQuery = FileStringUtil.FileToString(file);
-    public List<String> consultaCodigo(Long codigoProduto,int codigoFornecedor){
+    public List<String> consultaCodigo(String codigoProduto,int codigoFornecedor){
         String query = stringQuery
                 .replace("codigoProduto",String.valueOf(codigoProduto))
                 .replace("codigoFornecedor",String.valueOf(codigoFornecedor));

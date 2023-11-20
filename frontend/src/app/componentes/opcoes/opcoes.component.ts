@@ -10,11 +10,10 @@ import { ConsultaCamposService } from 'src/app/services/consulta-campos.service'
   templateUrl: './opcoes.component.html',
   styleUrls: ['./opcoes.component.css']
 })
-export class OpcoesComponent implements OnInit {
+export class OpcoesComponent {
 
   @Input() form!:FormGroup;
   @Input() atributo!:ProdutoXml;
-  @Input() listaFornecedor:ModeloPadrao[] = [];
   @Output() editarCodigo = new EventEmitter<ModeloPadrao>();
   listaPadrao:ModeloPadrao[] = [];
   listaSubCategorias:SubCategoria[] = [];
@@ -24,11 +23,6 @@ export class OpcoesComponent implements OnInit {
   carregando:boolean = false;
     
   constructor(private service:ConsultaCamposService){}
-  ngOnInit(): void {
-    if(this.atributo.nome == "Fornecedor"){
-      this.listaPadrao = this.listaFornecedor; 
-    }
-  }
 
   buscar(){
     if(this.campoBusca != "" && this.atributo.campoBusca){
@@ -65,7 +59,6 @@ export class OpcoesComponent implements OnInit {
         this.listaPadrao = res;
       },
       error:(err) =>{
-        console.log(err);
         this.carregando = false;
         this.mensagemErro = "Ocorreu um erro";
         this.listaPadrao = [];

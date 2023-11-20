@@ -12,6 +12,7 @@ import { NavbarComponent } from './componentes/navbar/navbar.component';
 import { OpcoesComponent } from './componentes/opcoes/opcoes.component';
 import { FilterPipe } from './pipes/filter.pipe';
 import { UppercaseDirective } from './diretivas/uppercase-input.directive';
+import { MensagemModalComponent } from './componentes/mensagem-modal/mensagem-modal.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { UppercaseDirective } from './diretivas/uppercase-input.directive';
     NavbarComponent,
     OpcoesComponent,
     FilterPipe,
-    UppercaseDirective
+    UppercaseDirective,
+    MensagemModalComponent
   ],
   imports: [
     BrowserModule,

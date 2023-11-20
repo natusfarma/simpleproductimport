@@ -146,7 +146,7 @@ INSERT INTO EST_PROD(
  '1,00',
  0,
  0,
- 'dataCadastro',
+ CONVERT (date,GETDATE()),
  0,
  1,
  1,

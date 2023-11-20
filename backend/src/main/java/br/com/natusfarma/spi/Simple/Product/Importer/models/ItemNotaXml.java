@@ -1,11 +1,12 @@
 package br.com.natusfarma.spi.Simple.Product.Importer.models;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
-public class ItemNotaXml {
+public class ItemNotaXml implements Comparable<ItemNotaXml>{
     private int nItem;
 
-    private Long cProd;
+    private String cProd;
     private int NCM;
     private String cEAN;
     private String xProd;
@@ -19,6 +20,7 @@ public class ItemNotaXml {
 
     private String codigoProduto;
     private String status;
+
 
     public String getCodigoProduto() {
         return codigoProduto;
@@ -72,11 +74,11 @@ public class ItemNotaXml {
         this.nItem = nItem;
     }
 
-    public Long getcProd() {
+    public String getcProd() {
         return cProd;
     }
 
-    public void setcProd(Long cProd) {
+    public void setcProd(String cProd) {
         this.cProd = cProd;
     }
 
@@ -142,5 +144,35 @@ public class ItemNotaXml {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "ItemNotaXml{" +
+                "nItem=" + nItem +
+                ", cProd='" + cProd + '\'' +
+                ", NCM=" + NCM +
+                ", cEAN='" + cEAN + '\'' +
+                ", xProd='" + xProd + '\'' +
+                ", CEST='" + CEST + '\'' +
+                ", uCom='" + uCom + '\'' +
+                ", vUnCom=" + vUnCom +
+                ", vICMSST=" + vICMSST +
+                ", qTrib=" + qTrib +
+                ", vIPI=" + vIPI +
+                ", cProdANVISA='" + cProdANVISA + '\'' +
+                ", codigoProduto='" + codigoProduto + '\'' +
+                ", status='" + status + '\'' +
+                ", precoCusto=" + precoCusto +
+                '}';
+    }
+
+    @Override
+    public int compareTo(ItemNotaXml o) {
+        int codigo = this.cProd.compareTo(o.cProd);
+        if (codigo != 0){
+            return codigo;
+        }
+        return 0;
     }
 }

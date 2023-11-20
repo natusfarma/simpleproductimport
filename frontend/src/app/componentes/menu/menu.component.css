@@ -47,7 +47,6 @@ label[for='file']:hover{
 
 .col-status{
     justify-content: center;
-    cursor: pointer;
     text-align: center;
 }
   
@@ -55,3 +54,26 @@ label[for='file']:hover{
     display: inline-block;
     vertical-align: middle;
 }   
+
+.dialog-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+  
+.dialog-content {
+    background-color: white;
+    width: 40%;
+    height: 30%;
+    border-radius: 4px;
+}
+.list-group-item:hover{
+    cursor: pointer;
+    background-color: #cbcbcb;
+}

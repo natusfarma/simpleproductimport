@@ -5,10 +5,11 @@
   </div>
   
   <div class="row" style="margin-top: 10px;">
-    <form class="col-6" (submit)="enviarArquivo()">
+    <form class="col-6">
       <input type="file" id="file" (change)="selecionarArquivo($event)" accept=".xml">
       <label for="file">Escolha um arquivo xml</label>
-      <button type="submit" class="btn btn-enviar">Enviar</button>
+      <button (click)="enviarArquivo()" class="btn btn-enviar">Enviar Xml</button>
+      <button (click)="cadastrar()" class="btn btn-enviar">Cadastrar sem Xml</button>
       <div class="nome-arquivo" *ngIf="arquivoXML">
         {{arquivoXML.name}}
       </div>
@@ -23,9 +24,6 @@
 
   </div>
  
-  
-
-
   <table class="table table-bordered border-secondary mt-3">
     <thead>
       <tr>
@@ -40,15 +38,27 @@
         <td>{{obj.cProd}}</td>
         <td>{{obj.xProd}}</td>
         <td>{{obj.cEAN}}</td>
-        <td class="col-status" (click)="carregarFormulario(index)">
+        <td class="col-status">
           <i class="fa fa-check-circle" style='color:#4ce50b' *ngIf="obj.status == 'ok'"> </i>
-          <i class="fa fa-exclamation-circle" style='color:red' *ngIf="obj.status == 'erro'"></i>
-          <i class="fa fa-exclamation-circle" style='color:rgb(233, 195, 7)' *ngIf="obj.status == 'atencao'"></i>
+          <i class="fa fa-exclamation-circle" style='color:red;cursor:pointer;' *ngIf="obj.status == 'erro'" (click)="carregarFormulario(index)"></i>
+          <i class="fa fa-exclamation-circle" style='color:rgb(233, 195, 7)'  *ngIf="obj.status == 'atencao'"></i>
           {{obj.codigoProduto}}
         </td>
       </tr>
     </tbody>
   </table>
+</div>
 
+<div class="dialog-overlay" *ngIf="mostrar">
+  <div class="dialog-content">
 
+    <ul class="list-group">
+      <li class="list-group-item"
+        *ngFor="let fornecedor of objetosXml.fornecedores;let i = index"
+        (click)="atualizarFornecedor(i)"
+      >
+      {{fornecedor.codigo}} {{fornecedor.nome}}
+      </li>
+    </ul>
+  </div>
 </div>

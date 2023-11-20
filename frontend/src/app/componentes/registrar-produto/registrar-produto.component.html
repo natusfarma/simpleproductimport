@@ -14,33 +14,38 @@
 
                     <ng-template #inputRow>
                         <td class="coluna-nome" [ngClass]="{'export': atributo.nomeCadastro}">{{ atributo.nome }} {{atributo.codigo}}</td>
-                        <td class="d-flex">
-                            <ng-container *ngIf="!atributo.tipo">
-                                <input type="text" [formControlName]="atributo.nome" [name]="atributo.nome + index"
-                                    [maxlength]="atributo.maxlength ? atributo.maxlength : -1">
+                        <td class="coluna-input">
+                            <div class="input-container" *ngIf="!atributo.tipo">
+                                <input type="text" class="input-padrao" [ngClass]="{'input-reduzido': atributo.campoBusca || atributo.nomeCadastro == 'barras'}"
+                                 [formControlName]="atributo.nome"
+                                [maxlength]="atributo.maxlength !== undefined ? atributo.maxlength : null" uppercase>
                                 <button class="btn btn-sm ms-2 btn-info" *ngIf="atributo.campoBusca" type="button"
                                     (click)="buscarOpcoes(atributo)">Buscar</button>
-                            </ng-container>
+                                <button class="btn btn-sm ms-2 btn-info" *ngIf="atributo.nomeCadastro == 'barras'" type="button" 
+                                (click)="verificarBarras()">Verificar</button>
+                            </div>
 
                             <ng-container *ngIf="atributo.tipo === 'radio'">
                                 <label *ngFor="let opcao of atributo.opcoes let i = index" class="me-5">
                                     <input type="radio" [formControlName]="atributo.nome" [value]="i"> {{opcao}}
                                 </label>
                             </ng-container>
+                           
                         </td>
                     </ng-template>
                 </tr>
             </tbody>
         </table> 
-        <button class="btn btn-warning float-end mb-3 ms-3" type="button" (click)="gerarExcel()">Gerar Excel</button>
-        <button class="btn btn-info float-end mb-3" type="button" (click)="exportar()">Exportar</button>
+        <div class="text-end mb-3">
+            <button class="btn btn-danger float-start" type="button" (click)="resetarForm()">Resetar formulario</button>
+            <button class="btn btn-info ms-2" type="button" [disabled]="form.invalid || carregando == true || desabilitado == true" (click)="exportar()">Exportar</button>
+            <button class="btn btn-warning ms-2" type="button" (click)="gerarExcel(excelColunas())">Gerar Excel</button>
+        </div>
     </form>
 </div>
 
-<app-opcoes *ngIf="atributo?.mostrarOpcoes && dadosXml?.fornecedores" [form]="form" [atributo]="atributo"
-    [listaFornecedor]="dadosXml.fornecedores" (editarCodigo)="editarCodigo($event)">
+<app-opcoes *ngIf="atributo?.mostrarOpcoes" [form]="form" [atributo]="atributo"
+    (editarCodigo)="editarCodigo($event)">
 </app-opcoes>
 
-<app-opcoes *ngIf="atributo?.mostrarOpcoes && !dadosXml?.fornecedores" [form]="form" [atributo]="atributo"
-(editarCodigo)="editarCodigo($event)">
-</app-opcoes>
+<app-mensagem-modal *ngIf="mensagem != ''" [(mensagem)]="mensagem" [alerta]="corAlerta"></app-mensagem-modal>

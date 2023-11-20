@@ -1,6 +1,7 @@
 package br.com.natusfarma.spi.Simple.Product.Importer.controller;
 
 import br.com.natusfarma.spi.Simple.Product.Importer.models.DadosCabecalhoXml;
+import br.com.natusfarma.spi.Simple.Product.Importer.models.ItemNotaXml;
 import br.com.natusfarma.spi.Simple.Product.Importer.models.ModeloPadrao;
 import br.com.natusfarma.spi.Simple.Product.Importer.services.ConsultaXmlService;
 import br.com.natusfarma.spi.Simple.Product.Importer.uteis.LeitorXml;
@@ -14,6 +15,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 @RestController
 @RequestMapping("api/")
@@ -26,6 +28,11 @@ public class XMLController {
     @PostMapping("/upload-xml")
     public DadosCabecalhoXml uploadXml(@RequestParam("file") MultipartFile file) throws IOException, ParserConfigurationException, SAXException {
         return this.consultaXmlService.lerXml(file.getInputStream());
+    }
+
+    @PostMapping("/status/{index}")
+    public List<ItemNotaXml> novosStatus(@PathVariable int index,@RequestBody DadosCabecalhoXml dados){
+        return this.consultaXmlService.obterLista(dados,index);
     }
 
     @PostMapping("/upload-excel")
